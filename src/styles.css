@@ -1,0 +1,24 @@
+body{
+    margin: 0;
+    background-color: grey;
+}
+
+
+
+#container{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.header{
+    background-color: #F5F5DC;
+    height: 100vh;
+}
+
+.title{
+    text-align: center;
+}
+
+.content{
+
+}
