@@ -1,0 +1,12 @@
+[
+  { "name": "title", "type": "text", "placeholder": "Title" },
+  { "name": "description", "type": "text", "placeholder": "Description" },
+  { "name": "dueDate", "type": "date", "placeholder": "" },
+  { 
+    "name": "priority", 
+    "type": "select", 
+    "options": ["Low", "Medium", "High"]
+  },
+  { "name": "notes", "type": "text", "placeholder": "Notes" },
+  { "name": "mail", "type": "email", "placeholder": "Mail" }
+]
