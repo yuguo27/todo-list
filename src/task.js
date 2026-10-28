@@ -8,7 +8,9 @@ let Task  = function(title, description, dueDate, priority, notes, mail){
     this.notes = notes;
     this.mail = mail;
 
-    this.isCompleted = () => {}
+    this.isCompleted = () => {
+        
+    }
 
 }
 
