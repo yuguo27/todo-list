@@ -1,8 +1,8 @@
-import createHeader from "./header.js";
-import createContent from "./content.js";
-import Project from "./project.js";
+import createHeader from "./DOM/header.js";
+import createContent from "./DOM/content.js";
+import Project from "./Object/project.js";
 import "./styles.css";
-import Task from "./task.js";
+import Task from "./Object/task.js";
 
 function loadLocalStorage() {
     let savedData = localStorage.getItem("todo_projects");

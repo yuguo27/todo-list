@@ -1,7 +1,7 @@
-import createTaskCard from "./taskCard.js";
+import createTaskCard from "../create/taskCard.js";
 
 
-export default function createContent(taskArrays = []) {
+export default function createContent(taskArrays) {
     const container = document.querySelector("#container");
     
     let content = document.querySelector(".content");
@@ -22,10 +22,12 @@ export default function createContent(taskArrays = []) {
     title.textContent = "My Task";
     content.appendChild(title);
 
+
     taskArrays.forEach((task, index) => {
         createTaskCard(taskArrays, refresh, task, index);
+        content.appendChild(createTaskCard(taskArrays, refresh, task, index));
     });
 
     
-    content.appendChild(createTaskCard(taskArrays, refresh, task, index));
+    
 }
