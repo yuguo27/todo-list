@@ -3,17 +3,17 @@ import createContent from "./content.js";
 import createTask from "../create/createTask.js";
 import createProject from "../create/createProject.js";
 
-export default function createHeader(projectList, defaultProject) {
+export default function createHeader(state) {
     const container = document.querySelector("#container");
     const header = document.createElement("div");
     header.classList.add("header");
 
-    let activeProject = defaultProject;
-
     const title = document.createElement("h1");
     title.classList.add("title");
-    title.textContent = activeProject.name;
+    title.textContent = state.activeProject.name;
 
+    const headerDisplay = document.createElement("div");
+    headerDisplay.classList.add("headerDisplay")
     /* --- CONTENEUR DES BOUTONS DE PROJET --- */
     const projectsNav = document.createElement("div");
     projectsNav.classList.add("projects-nav");
@@ -22,25 +22,25 @@ export default function createHeader(projectList, defaultProject) {
     function renderProjectButtons() {
         projectsNav.innerHTML = ""; // Vider avant de re-rendre
 
-        projectList.forEach(proj => {
-            const projectButton = document.createElement("button");
-            projectButton.classList.add("project-btn");
-            projectButton.textContent = proj.name;
+        state.projects.forEach(proj => {
+            const projectClick = document.createElement("div");
+            projectClick.textContent = proj.name;
+            projectClick.style.cursor = "pointer"
 
             // Indiquer le projet actif visuellement
-            if (proj === activeProject) {
-                projectButton.classList.add("active");
+            if (proj === state.activeProject) {
+                projectClick.classList.add("active");
             }
 
             // Écouteur pour changer de projet actif (SWITCH)
-            projectButton.addEventListener("click", () => {
-                activeProject = proj;
-                title.textContent = activeProject.name;
+            projectClick.onclick = () => {
+                state.activeProject = proj;
+                title.textContent = state.activeProject.name;
                 renderProjectButtons(); // Met à jour la classe active
-                createContent(activeProject.tasks);
-            });
+                createContent(state);
+            };
 
-            projectsNav.appendChild(projectButton);
+            projectsNav.appendChild(projectClick);
         });
     }
 
@@ -48,8 +48,12 @@ export default function createHeader(projectList, defaultProject) {
 
     // Initialisation de la barre de boutons au premier rendu
     renderProjectButtons();
-    createTask(activeProject, projectList, header);
-    createProject(projectList,activeProject, header, title);
+    createTask(state, header);
+    createProject(state, header, () => {
+        title.textContent = state.activeProject.name;
+        renderProjectButtons();
+        createContent(state);
+    });
     // Insertion dans le DOM
     header.appendChild(title);
     header.appendChild(projectsNav);

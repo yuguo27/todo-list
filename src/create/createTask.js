@@ -2,7 +2,7 @@ import Task from "../Object/task.js";
 import formFields from "../formFields.json";
 import createContent from "../DOM/content.js";
 
-export default function createTask(activeProject, projectList, header){
+export default function createTask(state, header){
 
     const createTaskButton = document.createElement("button");
     createTaskButton.textContent = "Create a task";
@@ -64,10 +64,10 @@ export default function createTask(activeProject, projectList, header){
             inputs.notes.value,
             inputs.mail.value
         );
-        activeProject.tasks.push(newTask);
+        state.activeProject.tasks.push(newTask);
 
-        localStorage.setItem("todo_projects", JSON.stringify(projectList));
-        createContent(activeProject.tasks);
+        localStorage.setItem("todo_projects", JSON.stringify(state.projects));
+        createContent(state);
         taskForm.reset();
         taskForm.style.display = "none";
     });

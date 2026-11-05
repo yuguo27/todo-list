@@ -1,8 +1,9 @@
 import createTaskCard from "../create/taskCard.js";
 
 
-export default function createContent(taskArrays) {
+export default function createContent(state) {
     const container = document.querySelector("#container");
+    const taskArrays = state.activeProject.tasks;
     
     let content = document.querySelector(".content");
 
@@ -16,7 +17,10 @@ export default function createContent(taskArrays) {
         }
     }
 
-    const refresh = () => createContent(taskArrays);
+    const refresh = () => {
+        localStorage.setItem("todo_projects", JSON.stringify(state.projects));
+        createContent(state);
+    };
 
     const title = document.createElement("h1");
     title.textContent = "My Task";
@@ -24,7 +28,6 @@ export default function createContent(taskArrays) {
 
 
     taskArrays.forEach((task, index) => {
-        createTaskCard(taskArrays, refresh, task, index);
         content.appendChild(createTaskCard(taskArrays, refresh, task, index));
     });
 

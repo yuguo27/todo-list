@@ -1,9 +1,9 @@
 
 import Project from "../Object/project.js";
-import createContent from "../DOM/content.js";
 
-export default function createProject(projectList, activeProject, header, title){
+export default function createProject(state, header, onProjectChange){
     /* --- FORMULAIRE DE CRÉATION DE PROJET --- */
+    
     const createProjectButton = document.createElement("button");
     createProjectButton.textContent = "Create a project";
 
@@ -34,13 +34,11 @@ export default function createProject(projectList, activeProject, header, title)
         if (!projectInput.value.trim()) return;
 
         const newProj = new Project(projectInput.value.trim());
-        projectList.push(newProj);
-        activeProject = newProj; // Le nouveau projet devient le projet actif
-        localStorage.setItem("todo_projects", JSON.stringify(projectList));
-        title.textContent = activeProject.name;
+        state.projects.push(newProj);
+        state.activeProject = newProj;
+        localStorage.setItem("todo_projects", JSON.stringify(state.projects));
 
-        renderProjectButtons(); // Re-génère la liste des boutons
-        createContent(activeProject.tasks); // Affiche les tâches (vides) du nouveau projet
+        onProjectChange();
 
         projectForm.reset();
         projectForm.style.display = "none";
@@ -50,4 +48,3 @@ export default function createProject(projectList, activeProject, header, title)
     header.appendChild(projectForm);
 
 }
-

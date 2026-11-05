@@ -4,6 +4,9 @@ import Project from "./Object/project.js";
 import "./styles.css";
 import Task from "./Object/task.js";
 
+
+
+
 function loadLocalStorage() {
     let savedData = localStorage.getItem("todo_projects");
     
@@ -22,7 +25,8 @@ function loadLocalStorage() {
                     rawTask.dueDate,
                     rawTask.priority,
                     rawTask.notes,
-                    rawTask.mail
+                    rawTask.mail,
+                    rawTask.completed ?? false
                 );
             });
             
@@ -35,19 +39,21 @@ function loadLocalStorage() {
     return null;
 }
 
-let projectList = loadLocalStorage();
-
+let projects = loadLocalStorage();
 // Si le localStorage était vide (première visite)
-if (!projectList || projectList.length === 0) {
-    projectList = [];
+if (!projects || projects.length === 0) {
+    projects = [];
     const defaultProject = new Project("Inbox", []);
-    projectList.push(defaultProject);
+    projects.push(defaultProject);
     
     // On sauvegarde tout de suite l'état initial
-    localStorage.setItem("todo_projects", JSON.stringify(projectList));
+    localStorage.setItem("todo_projects", JSON.stringify(projects));
 }
 
-let activeProject = projectList[0];
+const state = {
+    projects,
+    activeProject: projects[0]
+};
 
-createHeader(projectList, activeProject);
-createContent(activeProject.tasks);
+createHeader(state);
+createContent(state);
